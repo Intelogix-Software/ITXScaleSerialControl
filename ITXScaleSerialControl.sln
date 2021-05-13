@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITXScaleSerialControl", "ITXScaleSerialControl\ITXScaleSerialControl.csproj", "{272E506D-885D-4C63-90EB-83F3AC72CE10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{272E506D-885D-4C63-90EB-83F3AC72CE10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{272E506D-885D-4C63-90EB-83F3AC72CE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{272E506D-885D-4C63-90EB-83F3AC72CE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{272E506D-885D-4C63-90EB-83F3AC72CE10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {606AC351-0E5B-4115-99CA-32D053E401D9}
+	EndGlobalSection
+EndGlobal
