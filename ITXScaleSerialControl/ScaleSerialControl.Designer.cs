@@ -54,9 +54,9 @@
             this.lbl_currentValue.Appearance.Options.UseFont = true;
             this.lbl_currentValue.Location = new System.Drawing.Point(62, 16);
             this.lbl_currentValue.Name = "lbl_currentValue";
-            this.lbl_currentValue.Size = new System.Drawing.Size(371, 77);
+            this.lbl_currentValue.Size = new System.Drawing.Size(314, 77);
             this.lbl_currentValue.TabIndex = 0;
-            this.lbl_currentValue.Text = "labelControl1";
+            this.lbl_currentValue.Text = "SerialValue";
             // 
             // bw_serialRead
             // 
