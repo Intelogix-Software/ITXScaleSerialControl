@@ -43,7 +43,7 @@
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(497, 98);
+            this.panelControl1.Size = new System.Drawing.Size(421, 98);
             this.panelControl1.TabIndex = 0;
             // 
             // lbl_currentValue
@@ -52,7 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_currentValue.Appearance.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_currentValue.Appearance.Options.UseFont = true;
-            this.lbl_currentValue.Location = new System.Drawing.Point(62, 16);
+            this.lbl_currentValue.Location = new System.Drawing.Point(5, 5);
             this.lbl_currentValue.Name = "lbl_currentValue";
             this.lbl_currentValue.Size = new System.Drawing.Size(314, 77);
             this.lbl_currentValue.TabIndex = 0;
@@ -71,7 +71,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelControl1);
             this.Name = "ScaleSerialControl";
-            this.Size = new System.Drawing.Size(497, 98);
+            this.Size = new System.Drawing.Size(421, 98);
             this.Load += new System.EventHandler(this.ScaleSerialControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
@@ -84,7 +84,7 @@
 
         private System.IO.Ports.SerialPort port_1;
         private DevExpress.XtraEditors.PanelControl panelControl1;
-        private DevExpress.XtraEditors.LabelControl lbl_currentValue;
         private System.ComponentModel.BackgroundWorker bw_serialRead;
+        private DevExpress.XtraEditors.LabelControl lbl_currentValue;
     }
 }

@@ -13,6 +13,7 @@ namespace ITXScaleSerialControl
 {
     public partial class ScaleSerialControl: UserControl
     {
+        public int fontSizeV=40;
         public string SerialPortCOMName
         {
             get { return port_1.PortName; }
@@ -23,12 +24,23 @@ namespace ITXScaleSerialControl
             get { return port_1.BaudRate; }
             set { port_1.BaudRate = value; }
         }
+        public Font lblFont
+        {
+            get { return lbl_currentValue.Font; }
+            set { lbl_currentValue.Font = value; }
+        }
+        public Color Fore
+        {
+            get { return lbl_currentValue.ForeColor; }
+            set { lbl_currentValue.ForeColor = value; }
+        }
         public string CurrentValue;
         
         public ScaleSerialControl()
         {
             InitializeComponent();
-            
+            //lbl_currentValue.Font = new Font(lbl_currentValue.Font.FontFamily,100);
+
         }
         public void StartRead()
         {
