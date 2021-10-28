@@ -14,6 +14,48 @@ namespace ITXScaleSerialControl
     public partial class ScaleSerialControl: UserControl
     {
         public int fontSizeV=40;
+        public new event EventHandler Click
+        {
+            add
+            {
+                base.Click += value;
+                foreach (Control control in Controls)
+                {
+                    control.Click += value;
+                }
+            }
+            remove
+            {
+                base.Click -= value;
+                foreach (Control control in Controls)
+                {
+                    control.Click -= value;
+                }
+            }
+        }
+        public new event EventHandler dClick
+        {
+            add
+            {
+                base.DoubleClick += value;
+                foreach (Control control in Controls)
+                {
+                    control.Click += value;
+                }
+            }
+            remove
+            {
+                base.DoubleClick -= value;
+                foreach (Control control in Controls)
+                {
+                    control.Click -= value;
+                }
+            }
+        }
+        private void Control_Click(object sender, EventArgs e)
+        {
+            this.OnClick(e);
+        }
         public string SerialPortCOMName
         {
             get { return port_1.PortName; }

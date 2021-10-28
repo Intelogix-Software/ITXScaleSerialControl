@@ -52,6 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_currentValue.Appearance.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_currentValue.Appearance.Options.UseFont = true;
+            this.lbl_currentValue.Enabled = false;
             this.lbl_currentValue.Location = new System.Drawing.Point(5, 5);
             this.lbl_currentValue.Name = "lbl_currentValue";
             this.lbl_currentValue.Size = new System.Drawing.Size(314, 77);
