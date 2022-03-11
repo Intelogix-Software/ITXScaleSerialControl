@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using DevExpress.Utils;
 using System.Threading;
+using System.IO;
 
 namespace ITXScaleSerialControl
 {
@@ -35,6 +36,50 @@ namespace ITXScaleSerialControl
         //        }
         //    }
         //}
+
+        public bool hasImage { get; set; }
+        private readonly MemoryStream _ms;
+        public static string com { get; set; }
+        public static Int16 baud { get; set; }
+        public void settings(bool HasImage, string printerCom, Int16 baudrate)
+        {
+
+            hasImage = HasImage;
+            com = printerCom;
+            baud = baudrate;
+        }
+        public void print(string alltext, byte[] image)
+        {
+            //if (com == null || com=="") return ;
+            //var e = new EPSON();
+            //using (SerialPrinter printer = new SerialPrinter(portName: /*"COM7"*/ com, baudRate: baud))
+            //{
+            //    printer.DataAvailable();
+            //    printer.Write(
+            //      ByteSplicer.Combine(
+            //        //e.CenterAlign(),
+            //        hasImage ? e.PrintImage(image, true) : e.Print(""),
+            //        e.Print(alltext)
+            //        ));
+            //    Thread.Sleep(500);
+            //}
+            SerialPort se = new SerialPort();
+            se.PortName = com;
+            se.BaudRate = 9600;
+            se.Parity = Parity.None;
+            se.StopBits = StopBits.One;
+            if (se.IsOpen)
+            {
+                se.Close();
+            }
+            using (se)
+            {
+                se.Open();
+                se.Write(alltext);
+                se.Close();
+            }
+
+        }
         public new event EventHandler DoubleClick
         {
             add
