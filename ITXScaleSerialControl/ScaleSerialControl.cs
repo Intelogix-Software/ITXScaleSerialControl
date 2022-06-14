@@ -41,6 +41,7 @@ namespace ITXScaleSerialControl
         private readonly MemoryStream _ms;
         public static string com { get; set; }
         public static Int16 baud { get; set; }
+        
         public void settings(bool HasImage, string printerCom, Int16 baudrate)
         {
 
@@ -80,24 +81,33 @@ namespace ITXScaleSerialControl
             }
 
         }
-        public new event EventHandler DoubleClick
+        public event EventHandler DoubleClick2
         {
             add
             {
-                base.Click += value;
+                base.DoubleClick += value;
                 foreach (Control control in this.Controls)
                 {
-                            control.Click += value;
-                }
 
+                            control.DoubleClick += value;
+
+                    foreach(Control control2 in control.Controls)
+                    {
+                        control2.DoubleClick += value;
+                    }
+                } 
             }
             remove
             {
-                base.Click -= value;
+                base.DoubleClick -= value;
                 foreach (Control control in Controls)
                 {
-                            control.Click += value;
-                }
+                    control.DoubleClick -= value;
+                    foreach (Control control2 in control.Controls)
+                    {
+                        control2.DoubleClick -= value;
+                    }
+                } 
             }
         }
         private void Control_Click(object sender, EventArgs e)
@@ -145,6 +155,7 @@ namespace ITXScaleSerialControl
             get { return lbl_motion.ForeColor; }
             set { lbl_motion.ForeColor = value; }
         }
+
 
 
         public string CurrentValue;
@@ -303,43 +314,63 @@ namespace ITXScaleSerialControl
             //}
 
         }
+        delegate void SetTextCallback(string text,bool v);
 
-        private void bw_serialRead_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void SetText(string text,bool v)
         {
-            lbl_currentValue.Text = CurrentValue;
-            if (motionDetected)
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.lbl_currentValue.InvokeRequired)
             {
-                lbl_motion.Text = lblm;
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text,v });
             }
             else
             {
-                lbl_motion.Text = "";
+                this.lbl_currentValue.Text = text;
+                ChangeFore(v);
             }
         }
-
-        private void ScaleSerialControl_Load(object sender, EventArgs e)
+        private void SetTextM(string text)
         {
-            //bw_serialRead.RunWorkerAsync();
-        }
-
-        private void bw_serialRead_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            try
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.lbl_motion.InvokeRequired)
             {
-                //bw_serialRead.RunWorkerAsync();
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text });
             }
-            catch(Exception E)
+            else
             {
-                Console.WriteLine(E.Message+"Ccomplete ");
+                this.lbl_motion.Text = text;
+            }
+        }
+        public void ChangeFore(bool v)
+        {
+            if (v)
+            {
+                this.Fore = Color.Green;
+            }
+            else
+            {
+                this.Fore = Color.Black;
             }
         }
 
-        private void panelControl1_Paint(object sender, PaintEventArgs e)
+        private void bw_serialRead_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            SetText(CurrentValue,motionDetected);
+            if (motionDetected)
+            {
+                SetTextM(lblm);
+            }
+            else
+            {
+                SetTextM("");
+            }
         }
-
-
-
+       
     }
 }
