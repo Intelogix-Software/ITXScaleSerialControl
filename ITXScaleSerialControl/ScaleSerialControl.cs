@@ -124,6 +124,12 @@ namespace ITXScaleSerialControl
             get { return port_1.BaudRate; }
             set { port_1.BaudRate = value; }
         }
+        public bool lineread=false;
+        public bool lread
+        {
+            get { return lineread; }
+            set { lineread = value; }
+        }
         public Font lblFont
         {
             get { return lbl_currentValue.Font; }
@@ -233,29 +239,29 @@ namespace ITXScaleSerialControl
                 //}
 
                 var current = "";
-                try
+
+
+                if (lineread)
                 {
-                    current = port_1.ReadExisting();
-                }
-                catch (System.IO.IOException)
-                {
-                    Console.WriteLine(e.Argument);
-                    Console.WriteLine(e.Result);
-                    Console.WriteLine(e.Cancel);
-                }
-                string i = current;
-                if (i.Length == 16)
-                {
-                    if (i.Contains("-"))
+                    string s = "";
+                    try
                     {
-                        string str = i.Substring(1, 7);
-                        CurrentValue = (Convert.ToInt32(str) * (-1)).ToString();
+                        current = port_1.ReadLine() ;
+
+                        if (current.Length == 0) return;
+                        s = current.Substring(1, current.Length -1).Split('L')[0];
+                        
                     }
-                    else
+                    catch (System.IO.IOException)
                     {
-                        CurrentValue = i.Substring(0, 7).Trim();
+                        Console.WriteLine(e.Argument);
+                        Console.WriteLine(e.Result);
+                        Console.WriteLine(e.Cancel);
                     }
-                    if (i.Contains("MO"))
+
+                    string i = s.Trim();
+                    
+                    if (current.Contains("MO"))
                     {
                         //MOtion detected
 
@@ -266,7 +272,7 @@ namespace ITXScaleSerialControl
                         motionDetected = false;
 
                     }
-                    if (i.Contains("CZ"))
+                    if (current.Contains("CZ"))
                     {
                         //te value is 0 or on tare
                         isTare = true;
@@ -275,7 +281,7 @@ namespace ITXScaleSerialControl
                     {
                         isTare = false;
                     }
-                    if ((i.Contains("LB")))
+                    if ((current.Contains("LB"))|| current.Contains("LG"))
                     {
                         //Te units are not in lbs
 
@@ -284,22 +290,87 @@ namespace ITXScaleSerialControl
                     else
                     {
                         isLB = false;
-                        
-                        if (i.Contains("-"))
-                        {
-                            string str = CurrentValue.Substring(1, 7);
-                            CurrentValue = (Convert.ToInt32(str) * (-1)).ToString();
-                        }
                         //Good Value
                     }
-                    //foreach (string j in current.Split('\n')) 
-                    //{
-                    //    //current.Substring(1,current.Length-1).Trim('\'').Replace("\\r","^").Split('^')
-                    //    string i = j;
-                    //        //MessageBox.Show(i);
+                    CurrentValue = i;
 
 
 
+                }
+                else
+                {
+
+
+                    try
+                    {
+                        current = port_1.ReadExisting();
+                    }
+                    catch (System.IO.IOException)
+                    {
+                        Console.WriteLine(e.Argument);
+                        Console.WriteLine(e.Result);
+                        Console.WriteLine(e.Cancel);
+
+                    }
+
+                    string i = current;
+                    if (i.Length == 16 )
+                    {
+                        if (i.Contains("-"))
+                        {
+                            string str = i.Substring(1, 7);
+                            CurrentValue = (Convert.ToInt32(str) * (-1)).ToString();
+                        }
+                        else
+                        {
+                            CurrentValue = i.Substring(0, 7).Trim();
+                        }
+                        if (i.Contains("MO"))
+                        {
+                            //MOtion detected
+
+                            motionDetected = true;
+                        }
+                        else
+                        {
+                            motionDetected = false;
+
+                        }
+                        if (i.Contains("CZ"))
+                        {
+                            //te value is 0 or on tare
+                            isTare = true;
+                        }
+                        else
+                        {
+                            isTare = false;
+                        }
+                        if (i.Contains("LB")|| i.Contains("L"))
+                        {
+                            //Te units are not in lbs
+
+                            isLB = true;
+                        }
+                        else
+                        {
+                            isLB = false;
+
+                            if (i.Contains("-"))
+                            {
+                                string str = CurrentValue.Substring(1, 7);
+                                CurrentValue = (Convert.ToInt32(str) * (-1)).ToString();
+                            }
+                            //Good Value
+                        }
+                        //foreach (string j in current.Split('\n')) 
+                        //{
+                        //    //current.Substring(1,current.Length-1).Trim('\'').Replace("\\r","^").Split('^')
+                        //    string i = j;
+                        //        //MessageBox.Show(i);
+
+
+
+                    }
                 }
                     //}
                     Thread.Sleep(10);
@@ -328,7 +399,7 @@ namespace ITXScaleSerialControl
             }
             else
             {
-                this.lbl_currentValue.Text = text;
+                this.lbl_currentValue.Text = Convert.ToInt32( text).ToString("N0");
                 ChangeFore(v);
             }
         }
