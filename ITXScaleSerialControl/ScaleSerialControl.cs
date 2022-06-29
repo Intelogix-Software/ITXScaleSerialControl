@@ -387,15 +387,22 @@ namespace ITXScaleSerialControl
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
-            if (this.lbl_currentValue.InvokeRequired)
+            try
             {
-                SetTextCallback d = new SetTextCallback(SetText);
-                this.Invoke(d, new object[] { text,v });
+                if (this.lbl_currentValue.InvokeRequired)
+                {
+                    SetTextCallback d = new SetTextCallback(SetText);
+                    this.Invoke(d, new object[] { text, v });
+                }
+                else
+                {
+                    this.lbl_currentValue.Text = Convert.ToInt32(text).ToString("N0");
+                    ChangeFore(v);
+                }
             }
-            else
+            catch
             {
-                this.lbl_currentValue.Text = Convert.ToInt32( text).ToString("N0");
-                ChangeFore(v);
+
             }
         }
         private void SetTextM(string text)
