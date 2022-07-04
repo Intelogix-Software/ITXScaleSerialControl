@@ -64,7 +64,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(240, 94);
+            this.panel1.Size = new System.Drawing.Size(242, 94);
             this.panel1.TabIndex = 2;
             // 
             // lbl_currentValue
@@ -79,7 +79,7 @@
             this.lbl_currentValue.Enabled = false;
             this.lbl_currentValue.Location = new System.Drawing.Point(0, 0);
             this.lbl_currentValue.Name = "lbl_currentValue";
-            this.lbl_currentValue.Size = new System.Drawing.Size(240, 94);
+            this.lbl_currentValue.Size = new System.Drawing.Size(242, 94);
             this.lbl_currentValue.TabIndex = 0;
             this.lbl_currentValue.Text = "SerialValue";
             // 
@@ -94,9 +94,9 @@
             // 
             this.panel2.Controls.Add(this.lbl_motion);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(242, 2);
+            this.panel2.Location = new System.Drawing.Point(244, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(177, 94);
+            this.panel2.Size = new System.Drawing.Size(175, 94);
             this.panel2.TabIndex = 4;
             // 
             // lbl_motion

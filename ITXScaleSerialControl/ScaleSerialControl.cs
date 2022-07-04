@@ -287,7 +287,7 @@ namespace ITXScaleSerialControl
                         isLB = false;
                         //Good Value
                     }
-                    CurrentValue = i;
+                    CurrentValue = i.Replace(" ","");
 
 
 
