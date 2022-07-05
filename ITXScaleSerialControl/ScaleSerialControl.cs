@@ -89,6 +89,10 @@ namespace ITXScaleSerialControl
                     foreach(Control control2 in control.Controls)
                     {
                         control2.DoubleClick += value;
+                        foreach (Control control3 in control2.Controls)
+                        {
+                            control3.DoubleClick += value;
+                        }
                     }
                 } 
             }
@@ -101,6 +105,10 @@ namespace ITXScaleSerialControl
                     foreach (Control control2 in control.Controls)
                     {
                         control2.DoubleClick -= value;
+                        foreach (Control control3 in control2.Controls)
+                        {
+                            control3.DoubleClick -= value;
+                        }
                     }
                 } 
             }
@@ -195,9 +203,7 @@ namespace ITXScaleSerialControl
         private void bw_serialRead_DoWork(object sender, DoWorkEventArgs e)
         {
             //try
-            //{
-
-            
+            //{ 
             if (port_1.IsOpen)
                 {
                     port_1.Close();
@@ -444,6 +450,15 @@ namespace ITXScaleSerialControl
                 SetTextM("");
             }
         }
-       
+
+        private void panelControl1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ScaleSerialControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
