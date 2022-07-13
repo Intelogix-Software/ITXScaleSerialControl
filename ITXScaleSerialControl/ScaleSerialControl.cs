@@ -177,29 +177,50 @@ namespace ITXScaleSerialControl
 
         public ScaleSerialControl()
         {
+            //Esto cambia todo el Thread, incluyendo la aplicacion en la que la llama
+            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en");
             InitializeComponent();
+            
             //lbl_currentValue.Font = new Font(lbl_currentValue.Font.FontFamily,100);
             //StartRead();
 
         }
         public void StartRead()
         {
+            
+            //port_1 = new SerialPort();
+            //port_1.BaudRate =SerialPortBaud;
+            //port_1.PortName = SerialPortCOMName;
             bw_serialRead.RunWorkerAsync();
+            //port_1.Open(); 
             //System.Windows.Forms.MessageBox.Show(port_1.PortName);
+            
         }
         public void StopRead()
         {
-
-            bw_serialRead.CancelAsync();
-           
             
+
+            //bw_serialRead.CancelAsync();
+            if (port_1.IsOpen)
+            {
+                port_1.Close();
+            }
+            //MessageBox.Show(port_1.IsOpen.ToString());
         }
         public string readerT(string current)
         {
             
             return "";
         }
-
+        public void restartPort()
+        {
+            if (port_1.IsOpen)
+            {
+                port_1.Close();
+            }
+            Thread.Sleep(500);
+            try { port_1.Open(); } catch (Exception ex) { Console.WriteLine(ex.Message); } 
+        }
         private void bw_serialRead_DoWork(object sender, DoWorkEventArgs e)
         {
             //try
@@ -258,11 +279,12 @@ namespace ITXScaleSerialControl
                         Console.WriteLine(e.Argument);
                         Console.WriteLine(e.Result);
                         Console.WriteLine(e.Cancel);
+                        return;
                     }
 
                     string i = s.Trim();
                     
-                    if (current.Contains("MO"))
+                    if (current.Contains("M"))
                     {
                         //MOtion detected
 
@@ -326,7 +348,7 @@ namespace ITXScaleSerialControl
                         {
                             CurrentValue = i.Substring(0, 7).Trim();
                         }
-                        if (i.Contains("MO"))
+                        if (i.Contains("M"))
                         {
                             //MOtion detected
 
@@ -376,6 +398,7 @@ namespace ITXScaleSerialControl
                     //}
                     Thread.Sleep(10);
                 bw_serialRead.ReportProgress(0, true);
+                
                 }
             //}
             //catch (Exception ee)
@@ -384,6 +407,7 @@ namespace ITXScaleSerialControl
             //    MessageBox.Show(ee.Message+ee.Source);
             //    //bw_serialRead_DoWork(sender, e);
             //}
+
 
         }
         delegate void SetTextCallback(string text,bool v);
@@ -402,8 +426,7 @@ namespace ITXScaleSerialControl
                 }
                 else
                 {
-                    this.lbl_currentValue.Text = Convert.ToInt32(text).ToString("N0");
-                    ChangeFore(v);
+                    this.lbl_currentValue.Text = Convert.ToInt32(text).ToString("N0", System.Globalization.CultureInfo.InvariantCulture);
                 }
             }
             catch
