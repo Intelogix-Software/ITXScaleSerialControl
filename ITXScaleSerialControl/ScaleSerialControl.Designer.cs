@@ -79,7 +79,7 @@
             this.lbl_currentValue.Name = "lbl_currentValue";
             this.lbl_currentValue.Size = new System.Drawing.Size(194, 90);
             this.lbl_currentValue.TabIndex = 0;
-            this.lbl_currentValue.Text = "/  /   /";
+            this.lbl_currentValue.Text = "No scale";
             // 
             // lbl_motion
             // 
