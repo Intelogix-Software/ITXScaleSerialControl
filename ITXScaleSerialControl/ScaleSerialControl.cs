@@ -35,12 +35,16 @@ namespace ITXScaleSerialControl
             se.StopBits = StopBits.One;
             if (se.IsOpen)
             {
+                se.DiscardInBuffer();
+                se.DiscardOutBuffer();  
                 se.Close();
             }
             using (se)
             {
                 se.Open();
                 se.Write(alltext);
+                se.DiscardInBuffer();
+                se.DiscardOutBuffer();
                 se.Close();
             }
 
@@ -135,6 +139,11 @@ namespace ITXScaleSerialControl
         }
 
 
+        public void SetPort(string PortName)
+        {
+            if (port_1 == null) { port_1 = new SerialPort();}
+            SerialPortCOMName = PortName;
+        }
 
         public string CurrentValue;
         public bool motionDetected;
@@ -157,6 +166,8 @@ namespace ITXScaleSerialControl
         {
             if (port_1.IsOpen)
             {
+                port_1.DiscardInBuffer();
+                port_1.DiscardOutBuffer();
                 port_1.Close();
             }
         }
@@ -167,8 +178,12 @@ namespace ITXScaleSerialControl
         }
         public void restartPort()
         {
+            if (port_1 == null) {port_1 = new SerialPort();}    
+
             if (port_1.IsOpen)
             {
+                port_1.DiscardInBuffer();
+                port_1.DiscardOutBuffer();
                 port_1.Close();
             }
             Thread.Sleep(500);
@@ -178,6 +193,8 @@ namespace ITXScaleSerialControl
         {
             if (port_1.IsOpen)
             {
+                port_1.DiscardInBuffer();
+                port_1.DiscardOutBuffer();
                 port_1.Close();
             }
 
@@ -326,7 +343,7 @@ namespace ITXScaleSerialControl
 
         private void SetText(string text, bool v)
         {
-            // InvokeRequired required compares the thread ID of the
+            // InvokeRequired required compares the thread ID of the 
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             try
